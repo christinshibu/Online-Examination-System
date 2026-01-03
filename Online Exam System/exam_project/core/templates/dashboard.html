@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Student Dashboard</h2>
+        <a href="{% url 'exam' %}" class="btn btn-success">Start New Exam</a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <h5 class="card-title">Your Exam History</h5>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Date & Time</th> 
+                        <th>Score</th> 
+                        <th>Percentage</th> 
+                        <th>Status</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for res in results %}
+                    <tr>
+                        <td>{{ res.exam_date|date:"M d, Y H:i" }}</td> 
+                        <td>{{ res.score }}</td> 
+                        <td>{{ res.percentage }}%</td> 
+                        <td>
+                            {% if res.status == "Pass" %}
+                                <span class="badge bg-success">Pass</span> 
+                            {% else %}
+                                <span class="badge bg-danger">Fail</span> 
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No exams attempted yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

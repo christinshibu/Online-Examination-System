@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">Student Profile: {{ profile.user.username }}</h4>
+            <a href="{% url 'dashboard' %}" class="btn btn-light btn-sm">Back to Dashboard</a>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 border-end">
+                    <h5 class="text-muted mb-3">Personal Information</h5>
+                    <p><strong>Phone:</strong> {{ profile.phone_number }}</p>
+                    <p><strong>College:</strong> {{ profile.college_name }}</p>
+                    <p><strong>Verification:</strong>
+                        {% if profile.is_approved %}
+                        <span class="badge bg-success">Verified</span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">Pending Admin Approval</span>
+                        {% endif %}
+                    </p>
+                    <hr>
+                    <a href="{% url 'edit_profile' %}" class="btn btn-outline-primary btn-sm w-100">Edit Profile</a>
+                </div>
+
+                <div class="col-md-8">
+                    <h5 class="text-muted mb-3 text-center">Identity Documents</h5>
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <p class="small fw-bold">ID Front View</p>
+                            <img src="{{ profile.id_card_front.url }}" class="img-fluid border rounded shadow-sm"
+                                alt="Front ID">
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <p class="small fw-bold">ID Back View</p>
+                            <img src="{{ profile.id_card_back.url }}" class="img-fluid border rounded shadow-sm"
+                                alt="Back ID">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

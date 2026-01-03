@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm p-4 border-0">
+            <h3 class="text-center mb-4 text-primary">Student Registration</h3>
+            <form method="POST" enctype="multipart/form-data" id="regForm">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="username" class="form-control" placeholder="Enter Full Name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" placeholder="Create Password" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone Number</label>
+                    <input type="text" name="phone" class="form-control" pattern="[0-9]{10}" maxlength="10"
+                        minlength="10" title="Please enter exactly 10 digits" placeholder="e.g. 9876543210" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">College Name</label>
+                    <input type="text" name="college" class="form-control" placeholder="Enter College Name" required>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">ID (Front)</label>
+                        <input type="file" name="id_front" class="form-control" accept="image/*" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">ID (Back)</label>
+                        <input type="file" name="id_back" class="form-control" accept="image/*" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2">Register & Proceed</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Validation to prevent empty file submissions
+    document.getElementById('regForm').onsubmit = function () {
+        let front = document.getElementsByName('id_front')[0].value;
+        let back = document.getElementsByName('id_back')[0].value;
+        if (!front || !back) {
+            alert("Both Front and Back sides of the ID card must be uploaded.");
+            return false;
+        }
+        return true;
+    };
+</script>
+{% endblock %}
